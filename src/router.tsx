@@ -1,23 +1,25 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import BaseLayout from './components/layout/BaseLayout';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
-    element: <Navigate to="/dashboard" replace />,
-  },
-  {
-    path: '/login',
-    element: <Login />,
-  },
-  {
-    path: '/dashboard',
-    element: (
-      <ProtectedRoute isAuthenticated={!!localStorage.getItem('isAuthenticated')}>
-        <Dashboard />
-      </ProtectedRoute>
-    ),
+    element: <BaseLayout />,
+    children: [
+      {
+        path: '/',
+        element: (
+          <ProtectedRoute isAuthenticated={!!localStorage.getItem('isAuthenticated')}>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/login',
+        element: <Login />,
+      },
+    ],
   },
 ]); 
