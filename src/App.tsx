@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Showcase from './components/Showcase/Showcase';
-import Dashboard from './pages/Dashboard';
+import { router } from './router';
 
 // Create a theme instance
 const theme = createTheme({
@@ -37,14 +37,8 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
-        <Routes>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          {/* Add more routes as needed */}
-        </Routes>
-        {showShowcase && <Showcase onComplete={handleShowcaseComplete} />}
-      </Router>
+      <RouterProvider router={router} />
+      {showShowcase && <Showcase onComplete={handleShowcaseComplete} />}
     </ThemeProvider>
   );
 };
